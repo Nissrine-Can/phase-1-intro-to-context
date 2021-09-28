@@ -103,9 +103,13 @@ function createTimeOutEvent(bpRecord, dateStamp) {
   
   function hoursWorkedOnDate(cRecord, date) {
 
-        let hourIn = cRecord.timeInEvents[0].hour
-        let hourOut = cRecord.timeOutEvents[0].hour
-        let hours = (hourOut - hourIn)/100
+        let hourIn = cRecord.timeInEvents.find(el => {
+            return el.date === date
+        })
+        let hourOut = cRecord.timeOutEvents.find(el => {
+            return el.date === date
+        })
+        let hours = (hourOut.hour - hourIn.hour)/100
          return hours
          
         
