@@ -61,27 +61,57 @@ let bpRecord = {
 }
 
 let dateStamp = "2014-02-28 1400"
-let updatedBpRecord 
-let newEvent = []
+
 
 function createTimeInEvent(bpRecord, dateStamp) {
-  newEventObj  = {type: "TimeIn",
-                                               date: dateStamp.slice(0, 10),
-                                               time: dateStamp.slice(11)
+  const inEventObj  = {type: "TimeIn",
+                                        date: dateStamp.slice(0, 10),
+                                        hour: parseInt(dateStamp.slice(11))
                                              }
-    updatedBpRecord = Object.values(bpRecord).map(value => {
-        if (value === timeInEvents) {
-            newEvent.push(newEventObj)
-        }
-        
-    })
-    //newEvent.push(newEventObj)
-    //console.log(newEvent)
-    
-    
-    
-    console.log(updatedBpRecord)
-
-   
+     bpRecord.timeInEvents.push(inEventObj)
+     return bpRecord
 }
 createTimeInEvent(bpRecord, dateStamp)
+
+dateStamp = "2015-02-28 1700"
+function createTimeOutEvent(bpRecord, dateStamp) {
+    const outEventObj  = {type: "TimeOut",
+                                          date: dateStamp.slice(0, 10),
+                                          hour: parseInt(dateStamp.slice(11))
+                                               }
+       bpRecord.timeOutEvents.push(outEventObj)
+       return bpRecord
+  }
+  createTimeOutEvent(bpRecord, dateStamp)
+
+  cRecord = {
+    firstName: "Julius",
+    familyName: "Caesar",
+    title: "General",
+    peyPerHour: 1000,
+    timeInEvents: [{
+        type: "TimeIn",
+        date: "0044-03-15",
+        hour: 0900
+    }],
+    timeOutEvents: [{
+        type: "TimeOut",
+        date: "0044-03-15",
+        hour: 1100
+    }]
+  }
+  
+  function hoursWorkedOnDate(cRecord, date) {
+
+        let hourIn = cRecord.timeInEvents[0].hour
+        let hourOut = cRecord.timeOutEvents[0].hour
+        let hours = (hourOut - hourIn)/100
+         return hours
+         
+        
+}
+  hoursWorkedOnDate(cRecord, "0044-03-15")
+
+  /*let timeOut  = new Date("0044-03-15 1100")
+  let timeIn = new Date("0044-03-15 900")
+  let hours = parseInt(timeOut) - parseInt(timeIn)*/
