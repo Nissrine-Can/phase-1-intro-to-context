@@ -77,21 +77,28 @@ function allWagesFor(recordArray) {
    let dateArray = recordArray.timeInEvents.map(el => el.date)
    //console.log(dateArray)
    
-        dateArray.reduce(function(previousElement, currentElement) {
+        let reducedEmployee =  dateArray.reduce(function(previousElement, currentElement) {
             return previousElement + wagesEarnedOnDate(recordArray, currentElement)
             
         })
-      
+      return reducedEmployee
 }
 
 function calculatePayroll(employeesRecord) {
     
-   let datesArray = employeesRecord.map(recordArray => recordArray.firstName.map(el => el.dates))
+//    let datesArray = employeesRecord.map(recordArray => recordArray.firstName.map(el => el.dates))
 
-   let dArray = datesArray.map(dateArray => dateArray.reduce(function(previousElement, currentElement) {
-     previousElement + wagesEarnedOnDate(recordArray, currentElement)
-      dArray.reduce(function(prevElement, currElement) {
-          return prevElement + currElement
-      })
-}))
+//    let dArray = datesArray.map(dateArray => dateArray.reduce(function(previousElement, currentElement) {
+//      previousElement + wagesEarnedOnDate(recordArray, currentElement)
+//       dArray.reduce(function(prevElement, currElement) {
+//           return prevElement + currElement
+//       })
+// }))
+
+    return employeesRecord.reduce((memo, rec) => {
+        console.log(memo)
+        console.log(rec)
+        return memo + allWagesFor(rec)
+    },  0)
 }
+//calculatePayroll(employeesRecord)
