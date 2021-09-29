@@ -1,13 +1,6 @@
 
 
-//const recordArray = ["Gray", "Worm", "Security", 1]
-/*let testEmployee = {}
-const newKeys = {
-    0: "firstName", 
-    1: "familyName",
-    2: "title",
-    3: "payPerHour"
-}*/
+
 function createEmployeeRecord(recordArray) {
     return {
         firstName: recordArray[0],
@@ -20,16 +13,7 @@ function createEmployeeRecord(recordArray) {
 }
 
 
-/*function createEmployeeRecord(recordArray) {
-     const initObj = Object.assign({}, recordArray)
-      const keyValues = Object.keys(initObj).map(key => {
-        const newKey = newKeys[key] || key;
-        return { [newKey]: initObj[key] };
-      });
-      testEmployee = Object.assign({}, ...keyValues, {timeInEvents: []}, {timeOutEvents: []});
-      return testEmployee;
-}
-createEmployeeRecord(recordArray)*/
+
 
       
 function createEmployeeRecords(recordRows) {
@@ -75,30 +59,21 @@ function wagesEarnedOnDate(recordArray, date) {
 function allWagesFor(recordArray) {
     
    let dateArray = recordArray.timeInEvents.map(el => el.date)
-   //console.log(dateArray)
    
         let reducedEmployee =  dateArray.reduce(function(previousElement, currentElement) {
             return previousElement + wagesEarnedOnDate(recordArray, currentElement)
-            
-        })
+           
+        }, 0)
       return reducedEmployee
+      
 }
+
 
 function calculatePayroll(employeesRecord) {
     
-//    let datesArray = employeesRecord.map(recordArray => recordArray.firstName.map(el => el.dates))
-
-//    let dArray = datesArray.map(dateArray => dateArray.reduce(function(previousElement, currentElement) {
-//      previousElement + wagesEarnedOnDate(recordArray, currentElement)
-//       dArray.reduce(function(prevElement, currElement) {
-//           return prevElement + currElement
-//       })
-// }))
 
     return employeesRecord.reduce((memo, rec) => {
-        console.log(memo)
-        console.log(rec)
+        
         return memo + allWagesFor(rec)
     },  0)
 }
-//calculatePayroll(employeesRecord)
