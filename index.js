@@ -37,49 +37,61 @@ function createEmployeeRecords(recordRows) {
 }
 
 
-function createTimeInEvent(bpRecord, dateStamp) {
+function createTimeInEvent(recordArray, dateStamp) {
   const inEventObj  = {type: "TimeIn",
                                         date: dateStamp.slice(0, 10),
                                         hour: parseInt(dateStamp.slice(11))
                                              }
-     bpRecord.timeInEvents.push(inEventObj)
-     return bpRecord
+     recordArray.timeInEvents.push(inEventObj)
+     return recordArray
 }
 
 
-function createTimeOutEvent(bpRecord, dateStamp) {
+function createTimeOutEvent(recordArray, dateStamp) {
     const outEventObj  = {type: "TimeOut",
                                           date: dateStamp.slice(0, 10),
                                           hour: parseInt(dateStamp.slice(11))
                                                }
-       bpRecord.timeOutEvents.push(outEventObj)
-       return bpRecord
+       recordArray.timeOutEvents.push(outEventObj)
+       return recordArray
   }
   
-  function hoursWorkedOnDate(cRecord, date) {
+  function hoursWorkedOnDate(recordArray, date) {
 
-        let hourIn = cRecord.timeInEvents.find(el => {
+        let hourIn = recordArray.timeInEvents.find(el => {
             return el.date === date
         })
-        let hourOut = cRecord.timeOutEvents.find(el => {
+        let hourOut = recordArray.timeOutEvents.find(el => {
             return el.date === date
         })
         let hours = (hourOut.hour - hourIn.hour)/100
          return hours
 }
   
-function wagesEarnedOnDate(cRecord, date) {
-  return hoursWorkedOnDate(cRecord, date)*cRecord.payPerHour
+function wagesEarnedOnDate(recordArray, date) {
+  return hoursWorkedOnDate(recordArray, date)*recordArray.payPerHour
 }
 
-function allWagesFor(cRecord) {
-    return wagesEarnedOnDate(cRecord, "0044-03-14") + wagesEarnedOnDate(cRecord, "0044-03-15")
-}
-function calculatePayroll(csvDataEmployees) {
+function allWagesFor(recordArray) {
     
-   let wagesArray = csvDataEmployees.map(recordArray => wagesEarnedOnDate(recordArray, date))
+   let dateArray = recordArray.timeInEvents.map(el => el.date)
+   //console.log(dateArray)
+   
+        dateArray.reduce(function(previousElement, currentElement) {
+            return previousElement + wagesEarnedOnDate(recordArray, currentElement)
+            
+        })
+      
+}
 
-    wagesArray.reduce(function(previousValue, currentValue) {
-        return previousValue + currentValue
-    })
+function calculatePayroll(employeesRecord) {
+    
+   let datesArray = employeesRecord.map(recordArray => recordArray.firstName.map(el => el.dates))
+
+   let dArray = datesArray.map(dateArray => dateArray.reduce(function(previousElement, currentElement) {
+     previousElement + wagesEarnedOnDate(recordArray, currentElement)
+      dArray.reduce(function(prevElement, currElement) {
+          return prevElement + currElement
+      })
+}))
 }
